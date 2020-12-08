@@ -33,6 +33,7 @@ s = MinMaxScaler()
 s.fit(data)
 data = s.transform(data)
 #paste class data into the normalized data
+print(data)
 data = np.concatenate((data, y_data[1]), axis=1)
 #the following line is needed because there is a type mismatch after concatenating
 # the 1's & 0's.
@@ -41,8 +42,9 @@ data = data.astype(np.float)
 np.random.seed(4)
 np.random.shuffle(data)
 #create separate partions for the single test & train set (test 30, train 70)
-test_data = data[: 15]
-train_data = data[15:, :]
+test_data = data[: 30]
+train_data = data[30:, :]
+
 #initialization must include tf objects.
 #soft max requires me to format class values as such,
 # [1.0, 0.0] or [0.0, 1.0].
@@ -51,6 +53,7 @@ train_y = tf.constant(train_data[:,4:6])
 
 test_x = tf.constant(test_data[:, :4])
 test_y = tf.constant(test_data[:,4:6])
+
 
 model = Sequential()
 model.add(Dense(2, input_dim=4, activation='softmax'))
